@@ -1,0 +1,32 @@
+name: Docker push
+
+on:
+  push:
+    branches:
+    - master
+    tags:
+      - 'v*'
+  release:
+    types: [published]
+  schedule:
+    - cron: '*/30 * * * *'
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+    - run: git fetch --unshallow
+    - name: Build & Push latest version
+      run: |
+        set -eu
+        export DOCKER_REPO=nwtgck/rust-musl-builder
+
+        docker build -t ${DOCKER_REPO}:latest .
+        RUST_VERSION=$(ruby -e 'puts `docker run -it --rm #{ENV["DOCKER_REPO"]} rustc --version`.match(/rustc (\d+\.\d+\.\d+) /)[1]')
+        echo ${RUST_VERSION}
+        docker tag ${DOCKER_REPO}:latest ${DOCKER_REPO}:${RUST_VERSION}
+
+        echo ${{ secrets.DOCKER_HUB_TOKEN }} | docker login -u nwtgck --password-stdin
+        docker push ${DOCKER_REPO}:${RUST_VERSION}
+        docker push ${DOCKER_REPO}:latest
