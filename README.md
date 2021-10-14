@@ -1,6 +1,22 @@
 # `rust-musl-builder`: Docker container for easily building static Rust binaries
 
-[![Docker Image](https://img.shields.io/docker/pulls/ekidd/rust-musl-builder.svg?maxAge=2592000)](https://hub.docker.com/r/ekidd/rust-musl-builder/)
+## About
+
+```bash
+docker run nwtgck/rust-musl-builder:1.55.0
+```
+
+```bash
+docker run nwtgck/rust-musl-builder
+```
+
+The original repository is <https://github.com/emk/rust-musl-builder>, but recently not maintained. So I made this repository and automated Docker build & push.
+
+<!-- [![Docker Image](https://img.shields.io/docker/pulls/ekidd/rust-musl-builder.svg?maxAge=2592000)](https://hub.docker.com/r/ekidd/rust-musl-builder/) -->
+
+----
+
+## Original README
 
 - [Source on GitHub](https://github.com/emk/rust-musl-builder)
 - [Changelog](https://github.com/emk/rust-musl-builder/blob/master/CHANGELOG.md)
