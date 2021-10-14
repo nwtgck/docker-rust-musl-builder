@@ -1,0 +1,23 @@
+name: Docker push for old versions
+
+on:
+  push:
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build & Push latest version
+      run: |
+        set -eu
+        DOCKER_USER=nwtgck
+        export DOCKER_REPO=${DOCKER_USER}/rust-musl-builder
+
+        echo ${{ secrets.DOCKER_HUB_TOKEN }} | docker login -u ${DOCKER_USER} --password-stdin
+
+        for RUST_VERSION in (1.54.0 1.53.0 1.52.1 1.52.0 1.51.0); do
+          echo "Rust version: ${RUST_VERSION}"
+          docker build -t ${DOCKER_REPO}:${RUST_VERSION} .
+          docker push ${DOCKER_REPO}:${RUST_VERSION}
+        done
