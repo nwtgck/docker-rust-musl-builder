@@ -18,6 +18,6 @@ jobs:
 
         for RUST_VERSION in 1.54.0 1.53.0 1.52.1 1.52.0 1.51.0; do
           echo "Rust version: ${RUST_VERSION}"
-          docker build --build-arg TOOLCHAIN=${RUST_VERSION}" -t ${DOCKER_REPO}:${RUST_VERSION} .
+          docker build --build-arg TOOLCHAIN=${RUST_VERSION} -t ${DOCKER_REPO}:${RUST_VERSION} .
           docker push ${DOCKER_REPO}:${RUST_VERSION}
         done
