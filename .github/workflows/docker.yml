@@ -1,0 +1,28 @@
+name: Docker push
+
+on:
+  push:
+    branches:
+    - master
+  schedule:
+    - cron: '*/30 * * * *'
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build & Push latest version
+      run: |
+        set -eu
+        DOCKER_USER=nwtgck
+        export DOCKER_REPO=${DOCKER_USER}/rust-musl-builder
+
+        docker build -t ${DOCKER_REPO}:latest .
+        RUST_VERSION=$(docker run --rm ${DOCKER_REPO}:latest rustc -vV | grep "release: " | cut -c 10-)
+        echo "Rust version: ${RUST_VERSION}"
+        docker tag ${DOCKER_REPO}:latest ${DOCKER_REPO}:${RUST_VERSION}
+
+        echo ${{ secrets.DOCKER_HUB_TOKEN }} | docker login -u ${DOCKER_USER} --password-stdin
+        docker push ${DOCKER_REPO}:${RUST_VERSION}
+        docker push ${DOCKER_REPO}:latest
