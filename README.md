@@ -10,6 +10,8 @@ docker run nwtgck/rust-musl-builder:1.55.0
 docker run nwtgck/rust-musl-builder
 ```
 
+Docker Hub: <https://hub.docker.com/r/nwtgck/rust-musl-builder/tags>
+
 The original repository is <https://github.com/emk/rust-musl-builder>, but recently not maintained. So I made this repository and automated Docker build & push.
 
 <!-- [![Docker Image](https://img.shields.io/docker/pulls/ekidd/rust-musl-builder.svg?maxAge=2592000)](https://hub.docker.com/r/ekidd/rust-musl-builder/) -->
