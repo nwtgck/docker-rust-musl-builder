@@ -3,7 +3,7 @@
 ## About
 
 ```bash
-docker run nwtgck/rust-musl-builder:1.55.0
+docker run nwtgck/rust-musl-builder:1.56.1
 ```
 
 ```bash
